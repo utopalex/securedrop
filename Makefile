@@ -72,6 +72,11 @@ docker-build-ubuntu: ## Builds SD Ubuntu docker container
 build-debs: ## Builds and tests debian packages
 	@if [[ "${CIRCLE_BRANCH}" != docs-* ]]; then molecule test -s builder; else echo Not running on docs branch...; fi
 
+.PHONY: translate
+translate: ## Update POT translation files from sources
+	@cd securedrop ; ./manage.py translate-messages --extract-update
+	@cd securedrop ; ./manage.py translate-desktop --extract-update
+
 # Explaination of the below shell command should it ever break.
 # 1. Set the field separator to ": ##" and any make targets that might appear between : and ##
 # 2. Use sed-like syntax to remove the make targets
