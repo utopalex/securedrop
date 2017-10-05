@@ -246,6 +246,10 @@ that you expect to be up (e.g. ``google.com``) and click "Ping".
 
 |Ping|
 
+At this stage, you can elect to manually set up your firewall, or use templates
+we provide. We recommend using the templates, and if you have trouble you can
+step through the manual configuration to configure the firewall.
+
 Disable DHCP on the LAN
 -----------------------
 
@@ -334,11 +338,11 @@ reconnect. You should see a popup notification that says "Connection
 Established", followed several seconds later by the "Tor is ready"
 popup notification.
 
-For the next step, SecureDrop Configuration, you will manually configure the
-firewall for SecureDrop, using screenshots or XML templates as a reference.
+For the next step, SecureDrop Configuration, you can elect to manually configure
+your firewall using the WebGUI, or you can load the templates we provide.
 
-SecureDrop Configuration
-------------------------
+SecureDrop Configuration (Manual)
+---------------------------------
 
 SecureDrop uses the firewall to achieve two primary goals:
 
@@ -465,14 +469,23 @@ to add a rule.
 Once you've set up the firewall, exit the Unsafe Browser, and continue
 with the "Keeping pfSense up to date" section below.
 
-Configuration Reference Templates
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+SecureDrop Configuration (Templates)
+------------------------------------
+
+Alternatively, you can load the provided ``.xml`` templates.
+
+First navigate to **Diagnostics ▸ Backup & Restore**:
 
 As an alternative to the provided screenshots, you can examine the provided
 ``.xml`` templates as a reference. However, because of the Tails chroot,
 you can not download the ``.xml`` files directly. Using the Unsecure Browser,
 download the files from `GitHub <https://github.com/freedomofpress/securedrop/tree/develop/install_files/network_firewall/>`__
 as "Raw" and save them as plaintext documents.
+
+|Backup & Restore|
+
+Scroll down to "Restore Backup" and install each one of the template files for
+**Restore Areas** Interfaces, Aliases, and Firewall Rules, in that order:
 
 - Interfaces config: ``interfaces-config-pfSense.xml``
 - Aliases: ``aliases-config-pfSense.xml``
@@ -484,6 +497,10 @@ Ensure you have selected the appropriate Restore Area. After all three
 files are restored, reboot the firewall. Confirm you still have access to
 Tor using the Tor Browser after the firewall has restarted.
 
+Note that none of the template filters are encrypted. Click "Restore Configuration"
+to restore each file. After this is done, verify that the rules have been configured
+properly by comparing your settings with the screenshots above. If so, proceed to
+the next section.
 
 Tips for setting up pfSense Firewall Rules
 ------------------------------------------
@@ -579,6 +596,7 @@ Once it is complete, you will see a notification of successful upgrade:
 .. |Firewall Update Confirmation| image:: images/firewall/system_update.png
 .. |Firewall Update Progress| image:: images/firewall/system_is_updating.png
 .. |Firewall Update Complete| image:: images/firewall/system_update_complete.png
+.. |Backup & Restore| image:: images/firewall/backup_and_restore.png
 
 .. [#] Tails screenshots were taken on Tails 3.0~beta4. Please make an issue on
        GitHub if you are using the most recent version of Tails and the
