@@ -50,18 +50,24 @@ env = os.environ.get('SECUREDROP_ENV') or 'prod'
 if env == 'prod':
     # This is recommended for performance, and also resolves #369
     FlaskConfig.USE_X_SENDFILE = True
+    # How long a session is valid before it expires and logs a user out
+    SESSION_EXPIRATION_MINUTES = 30
 elif env == 'dev':
     # Enable Flask's debugger for development
     FlaskConfig.DEBUG = True
     # Use MAX_CONTENT_LENGTH to mimic the behavior of Apache's LimitRequestBody
     # in the development environment. See #1714.
     FlaskConfig.MAX_CONTENT_LENGTH = 524288000
+    # How long a session is valid before it expires and logs a user out
+    SESSION_EXPIRATION_MINUTES = 30
 elif env == 'test':
     FlaskConfig.TESTING = True
     # Disable CSRF checks to make writing tests easier
     FlaskConfig.WTF_CSRF_ENABLED = False
     # TODO use a unique temporary directory for each test so we can parallelize them
     SECUREDROP_DATA_ROOT = '/tmp/securedrop'
+    # Use a short session expiration for functional tests
+    SESSION_EXPIRATION_MINUTES = 0.5
 
 # The following configuration is dependent on SECUREDROP_DATA_ROOT
 
@@ -89,6 +95,3 @@ DATABASE_FILE = os.path.join(SECUREDROP_DATA_ROOT, 'db.sqlite')
 #SUPPORTED_LOCALES = ['en_US', 'fr_FR', 'nb_NO']
 # Which of the available locales should be displayed by default ?
 DEFAULT_LOCALE = 'en_US'
-
-# How long a session is valid before it expires and logs a user out
-SESSION_EXPIRATION_MINUTES = 30
