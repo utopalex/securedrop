@@ -136,3 +136,11 @@ class TestSourceLayout(
     def test_why_journalist_key(self):
         self._source_why_journalist_key()
         self._screenshot('source-why_journalist_key.png')
+
+    def test_source_session_timeout(self):
+        self._source_visits_source_homepage()
+        self._source_chooses_to_submit_documents()
+        self._source_continues_to_submit_page()
+        self._source_waits_for_session_to_timeout()
+        self._source_sees_session_timeout_message()
+        self._screenshot('source-session_timeout.png')

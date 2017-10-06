@@ -227,4 +227,7 @@ class SourceNavigationSteps():
         submit_button.click()
 
         notification = self.driver.find_element_by_css_selector('.important')
-        assert 'Your session timed out due to inactivity.' in notification.text
+
+        if not hasattr(self, 'accept_languages'):
+            expected_text = 'Your session timed out due to inactivity.'
+            assert expected_text in notification.text
