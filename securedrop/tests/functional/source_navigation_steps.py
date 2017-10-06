@@ -1,4 +1,5 @@
 import tempfile
+import time
 
 from selenium.webdriver.common.action_chains import ActionChains
 from step_helpers import screenshots
@@ -215,3 +216,15 @@ class SourceNavigationSteps():
 
     def _source_why_journalist_key(self):
         self.driver.get(self.source_location + "/why-journalist-key")
+
+    def _source_waits_for_session_to_timeout(self):
+        time.sleep(31)
+
+    def _source_sees_session_timeout_message(self):
+        text_box = self.driver.find_element_by_css_selector('[name=msg]')
+        text_box.send_keys(self.secret_message)
+        submit_button = self.driver.find_element_by_id('submit-doc-button')
+        submit_button.click()
+
+        notification = self.driver.find_element_by_css_selector('.important')
+        assert 'Your session timed out due to inactivity.' in notification.text
